@@ -24,7 +24,6 @@ namespace StudentAdminPortal.API.Controllers
         {
             //return View();
             //return Ok(studentRepository.GetStudents());
-
             var students =  await studentRepository.GetStudentsAsync();
 
             //var domainModelStudents = new List<Student>();
@@ -55,8 +54,20 @@ namespace StudentAdminPortal.API.Controllers
             //    }) ;
             //}
             return Ok(mapper.Map<List<Student>>(students));
+        }
+        [HttpGet]
+        [Route("[controller]/{student:guid}")]
+        public async Task<IActionResult> GetStudentAsync([FromRoute] Guid studentId)
+        {
+            //Fetch Student Details
+            var student = await studentRepository.GetStudentAsync(studentId);
 
-
+            //return Student
+            if(student == null)
+            {
+                return NotFound();
+            }
+            return Ok(mapper.Map<Student>(student));
         }
     }
 }

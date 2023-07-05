@@ -16,5 +16,11 @@ namespace StudentAdminPortal.API.Repositories
             // throw new NotImplementedException();
             return await context.Student.Include(nameof(Gender)).Include(nameof(Address)).ToListAsync();
         }
+        public async Task<Student> GetStudentAsync(Guid studentId)
+        {
+            //throw new NotImplementedException();
+            return await context.Student.Include(nameof(Gender)).Include(nameof(Address))
+                .FirstOrDefaultAsync(x => x.Id == studentId);
+        }
     }
 }
